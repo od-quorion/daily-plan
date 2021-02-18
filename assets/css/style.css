@@ -1,0 +1,164 @@
+:root{
+    --todo-color : #007994;
+    --timeup-color : #4e0000cf;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+}
+
+nav{
+    height: 10vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    min-width: 353px;
+}
+
+nav .logo{
+    margin-left: 10px;
+}
+
+main{
+    height: 65vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: floralwhite;
+}
+
+main table{
+    width: 35%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 15px 10px black,
+                0 0 20px 20px darkred;
+}
+
+main table tr{
+    height: calc((65vh - 100px) / 12);
+}
+
+main table thead tr{
+    background-color: #4e0000;
+    color: white;
+}
+
+main table tbody tr{
+    background: border-box;
+    color: black;
+}
+
+main table tbody tr.active{
+    font-weight: bold;
+    box-shadow: 0 0 15px 10px aqua;
+    z-index: 10;
+}
+
+main table tbody td:nth-child(2),
+main table tbody td:nth-child(3),
+main table tbody td:nth-child(4)
+{
+    width: 75px;
+}
+
+.todo{
+    background-color: var(--todo-color);
+    color: white;
+}
+
+.timeup{
+    background-color: var(--timeup-color);
+    color: white;
+}
+
+.ignore{
+    cursor: not-allowed;
+}
+
+main table tbody td input[type=checkbox]{
+    width: 20px;
+    height: 15px;
+    mix-blend-mode: color-burn;
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+table tr:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+footer{
+    height: 25vh;
+    background-color: #253943;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 353px;
+}
+
+footer .logo{
+    margin-right: 150px;
+}
+
+footer .logo img{
+    max-width: 100%;
+    width: 372px;
+    height: 75px;
+}
+
+footer .address{
+    color: white;
+}
+
+footer .contact{
+    color: white;
+    margin-left: 150px;
+}
+
+@media (max-width:990px){
+    footer .logo{
+        margin-right: 50px;
+    }
+
+    footer .contact{
+        margin-left: 50px;
+    }
+}
+
+@media (max-width:770px){
+    footer .logo img{
+        width: 200px;
+    }
+
+    footer .address{
+        font-size: 12px;
+    }
+
+    footer .contact{
+        font-size: 12px;
+    }
+}
