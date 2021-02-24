@@ -1,3 +1,5 @@
+console.log(Notification.permission)
+
 let date = new Date();
 
 let year = date.getFullYear();
@@ -85,3 +87,59 @@ tableRows.forEach(row => {
     }
 });
 
+(async () => {
+    // create and show the notification
+    const showNotification = () => {
+        // create a new notification
+        const notification = new Notification('JavaScript Notification API', {
+            body: 'This is a JavaScript Notification API demo',
+            icon: '../img/quorion_logo.svg'
+        });
+
+        // close the notification after 10 seconds
+        setTimeout(() => {
+            notification.close();
+        }, 10 * 1000);
+
+        // navigate to a URL when clicked
+        notification.addEventListener('click', () => {
+
+            window.open('https://www.javascripttutorial.net/web-apis/javascript-notification/', '_blank');
+        });
+    }
+
+    // // show an error message
+    // const showError = () => {
+    //     const error = document.querySelector('.error');
+    //     error.style.display = 'block';
+    //     error.textContent = 'You blocked the notifications';
+    // }
+
+    // check notification permission
+    let granted = localStorage.getItem("notificationPermission");
+
+    if(granted && granted == "true"){
+        showNotification();
+    }
+    else{
+        let permission = await Notification.requestPermission();
+        granted = permission === 'granted' ? true : false;
+        granted == true ? localStorage.setItem("notificationPermission", true) : localStorage.setItem("notificationPermission", false);
+    }
+
+    // if (Notification.permission === 'granted') {
+    //     console.log("aga0");
+    //     granted = true;
+    // } else if (Notification.permission !== 'denied') {
+    //     console.log(Notification.permission);
+
+    //     let permission = await Notification.requestPermission();
+    //     console.log(permission);
+    //     granted = permission === 'granted' ? true : false;
+    //     console.log(Notification.permission);
+    // }
+
+    // show notification or error
+    // granted ? showNotification() : showError();
+
+})();
