@@ -90,6 +90,7 @@ tableRows.forEach((row, index) => {
     if(!localStorage.getItem(`${index + 1}.job`)){
         if(date.getTime() >= endTime.getTime()){
             localStorage.setItem(`${index + 1}.job`, "showed");
+            allJobs[index].isShowed = true;
         }
         else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
             localStorage.setItem(`${index + 1}.job`, "notShowed");
