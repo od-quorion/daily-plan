@@ -121,7 +121,10 @@ tableRows.forEach((row, index) => {
 console.log(allJobs);
 
 if (Notification.permission === 'granted') {
-    new Worker("https://od-quorion.github.io/daily-plan/assets/js/worker.js");
+    let worker = new Worker("https://od-quorion.github.io/daily-plan/assets/js/worker.js");
+
+    worker.postMessage(allJobs);
+
 } else {
     Notification.requestPermission();
 }
