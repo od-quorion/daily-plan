@@ -59,7 +59,7 @@ self.onmessage = msg => {
     setInterval(() => {
         let date = new Date();
         const notification = new Notification('JavaScript Notification API', {
-            body: `${job.name} Time`,
+            body: `Merhaba Time`,
             icon: '../img/qback-logo.png',
             badge : '../img/quorion_logo.svg'
         });
