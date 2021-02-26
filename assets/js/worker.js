@@ -61,7 +61,8 @@ self.onmessage = msg => {
             if(job.isShowed === false && job.beginTime.getTime() <= date.getTime() && job.endTime.getTime() > date.getTime()){
                 const notification = new Notification('JavaScript Notification API', {
                     body: `${job.name} Time`,
-                    icon: '../img/quorion_logo.svg'
+                    icon: '../img/qback-logo.png',
+                    badge : '../img/quorion_logo.svg'
                 });
                 job.isShowed = true;
             }
