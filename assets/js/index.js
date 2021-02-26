@@ -36,6 +36,12 @@ let clearCheckBoxes = () => {
     });
 }
 
+let clearNotifications = () =>{
+    tableRows.forEach((_, index) => {
+        localStorage.setItem(`${index + 1}.job`, "notShowed");
+    });
+};
+
 if(localStorage.getItem("date")){
     let localDate = localStorage.getItem("date").split(".");
     let localYear = parseInt(localDate[2]);
@@ -44,6 +50,7 @@ if(localStorage.getItem("date")){
 
     if((localYear < year) || (localYear == year && localMonth < month) || (localYear == year && localMonth == month && localDay < day)){
         clearCheckBoxes();
+        clearNotifications();
         localStorage.setItem("date", `${day}.${month}.${year}`);
     }
 }
@@ -53,18 +60,44 @@ else{
 
 let tableRows = document.querySelectorAll("tbody tr");
 
-tableRows.forEach(row => {
+let allJobs = [];
+
+tableRows.forEach((row, index) => {
+
     let beginTime = row.children[1].innerHTML.split(":");
     let beginTimeHour = parseInt(beginTime[0]);
     let beginTimeMinute = parseInt(beginTime[1]);
-
+   
     beginTime = new Date(year, month - 1, day, beginTimeHour, beginTimeMinute);
 
     let endTime = row.children[2].innerHTML.split(":");
     let endTimeHour = parseInt(endTime[0]);
     let endTimeMinute = parseInt(endTime[1]);
-
+    
     endTime = new Date(year, month - 1, day, endTimeHour, endTimeMinute);
+    
+    allJobs.push({
+        name : row.children[0].innerHTML,
+        beginTime,
+        endTime,
+        beginTimeHour,
+        beginTimeMinute,
+        endTimeHour,
+        endTimeMinute,
+        isShowed : false
+    });
+
+    if(!localStorage.getItem(`${index + 1}.job`)){
+        if(date.getTime() >= endTime.getTime()){
+            localStorage.setItem(`${index + 1}.job`, "showed");
+        }
+        else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
+            localStorage.setItem(`${index + 1}.job`, "notShowed");
+        }
+        else if(date.getTime() < beginTime.getTime()){
+            localStorage.setItem(`${index + 1}.job`, "notShowed");
+        }
+    }
 
     if(date.getTime() >= endTime.getTime()){
         row.classList.add("timeup");
@@ -85,59 +118,82 @@ tableRows.forEach(row => {
     }
 });
 
-// (async () => {
-//     // create and show the notification
-//     const showNotification = () => {
-//         // create a new notification
-//         const notification = new Notification('JavaScript Notification API', {
-//             body: 'This is a JavaScript Notification API demo',
-//             icon: '../img/quorion_logo.svg'
-//         });
+console.log(allJobs);
 
-//         // close the notification after 10 seconds
-//         setTimeout(() => {
-//             notification.close();
-//         }, 10 * 1000);
+if (Notification.permission === 'granted') {
+    setInterval(() => {
+        allJobs.forEach((job, index) =>{
+            if(localStorage.getItem(`${index + 1}.job`) === "notShowed"){
+                const notification = new Notification('JavaScript Notification API', {
+                    body: `${job.name} Time`,
+                    icon: '../img/quorion_logo.svg'
+                });
 
-//         // navigate to a URL when clicked
-//         notification.addEventListener('click', () => {
+                setTimeout(() => {
+                    notification.close();
+                }, 10 * 1000);
 
-//             window.open('https://www.javascripttutorial.net/web-apis/javascript-notification/', '_blank');
-//         });
-//     }
+                notification.addEventListener('click', () => {
+                    window.open('https://od-quorion.github.io/daily-plan', '_blank');
+                });
 
-//     // // show an error message
-//     // const showError = () => {
-//     //     const error = document.querySelector('.error');
-//     //     error.style.display = 'block';
-//     //     error.textContent = 'You blocked the notifications';
-//     // }
+                localStorage.setItem(`${index + 1}.job`, "showed");
+            }
+        });
+        
+    }, 300000);
+} else {
+    Notification.requestPermission();
+}
 
-//     // check notification permission
-//     let granted = localStorage.getItem("notificationPermission");
+// else{
+//     let permission = await Notification.requestPermission();
+//     granted = permission === 'granted' ? true : false;
+//     granted == true ? localStorage.setItem("notificationPermission", true) : localStorage.setItem("notificationPermission", false);
+// }
 
-//     if(granted && granted == "true"){
-//         showNotification();
-//     }
-//     else{
-//         let permission = await Notification.requestPermission();
-//         granted = permission === 'granted' ? true : false;
-//         granted == true ? localStorage.setItem("notificationPermission", true) : localStorage.setItem("notificationPermission", false);
-//     }
+// setInterval(() => {
+//     (async () => {
+//         // create and show the notification
+//         const showNotification = () => {
+//             // create a new notification
+//             const notification = new Notification('JavaScript Notification API', {
+//                 body: 'This is a JavaScript Notification API demo',
+//                 icon: '../img/quorion_logo.svg'
+//             });
 
-//     // if (Notification.permission === 'granted') {
-//     //     console.log("aga0");
-//     //     granted = true;
-//     // } else if (Notification.permission !== 'denied') {
-//     //     console.log(Notification.permission);
+//             // close the notification after 10 seconds
+//             setTimeout(() => {
+//                 notification.close();
+//             }, 10 * 1000);
 
-//     //     let permission = await Notification.requestPermission();
-//     //     console.log(permission);
-//     //     granted = permission === 'granted' ? true : false;
-//     //     console.log(Notification.permission);
-//     // }
+//             // navigate to a URL when clicked
+//             notification.addEventListener('click', () => {
 
-//     // show notification or error
-//     // granted ? showNotification() : showError();
+//                 window.open('https://www.javascripttutorial.net/web-apis/javascript-notification/', '_blank');
+//             });
+//         }
 
-// })();
+//         // // show an error message
+//         // const showError = () => {
+//         //     const error = document.querySelector('.error');
+//         //     error.style.display = 'block';
+//         //     error.textContent = 'You blocked the notifications';
+//         // }
+
+//         // check notification permission
+        
+
+        
+
+//         //     let permission = await Notification.requestPermission();
+//         //     console.log(permission);
+//         //     granted = permission === 'granted' ? true : false;
+//         //     console.log(Notification.permission);
+//         // }
+
+//         // show notification or error
+//         // granted ? showNotification() : showError();
+
+//     })();
+// }, 300000);
