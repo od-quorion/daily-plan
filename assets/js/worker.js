@@ -55,7 +55,7 @@ self.onmessage = msg => {
     // console.log(msg);
 
     const notification = new Notification('JavaScript Notification API', {
-        body: `${job.name} Time`,
+        body: `${msg.data[0].name} Time`,
         icon: '../img/quorion_logo.svg'
     });
 
