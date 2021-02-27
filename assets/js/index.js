@@ -4,6 +4,7 @@ let year = date.getFullYear();
 let month = date.getMonth() + 1;
 let day = date.getDate();
 
+let tableRows = document.querySelectorAll("tbody tr");
 let checkBoxes = document.querySelectorAll("input[type=checkbox]");
 
 checkBoxes.forEach(checkBox => {
@@ -17,17 +18,19 @@ checkBoxes.forEach(checkBox => {
         }
     });
 
+    if(localStorage.getItem(checkBox.id)){
+        checkBox.checked = localStorage.getItem(checkBox.id) == "true" ? true : false;
+    }
+
 });
 
-let fillCheckBoxesFromLocalStorage = () =>{
-    checkBoxes.forEach(checkBox => {
-        if(localStorage.getItem(checkBox.id)){
-            checkBox.checked = localStorage.getItem(checkBox.id) == "true" ? true : false;
-        }
-    });
-}
+// let fillCheckBoxesFromLocalStorage = () =>{
+//     checkBoxes.forEach(checkBox => {
+        
+//     });
+// }
 
-fillCheckBoxesFromLocalStorage();
+// fillCheckBoxesFromLocalStorage();
 
 let clearCheckBoxes = () => {
     checkBoxes.forEach(checkBox => {
@@ -36,11 +39,11 @@ let clearCheckBoxes = () => {
     });
 }
 
-let clearNotifications = () =>{
-    tableRows.forEach((_, index) => {
-        localStorage.setItem(`${index + 1}.job`, "notShowed");
-    });
-};
+// let clearNotifications = () =>{
+//     tableRows.forEach((_, index) => {
+//         localStorage.setItem(`${index + 1}.job`, "notShowed");
+//     });
+// };
 
 if(localStorage.getItem("date")){
     let localDate = localStorage.getItem("date").split(".");
@@ -50,15 +53,13 @@ if(localStorage.getItem("date")){
 
     if((localYear < year) || (localYear == year && localMonth < month) || (localYear == year && localMonth == month && localDay < day)){
         clearCheckBoxes();
-        clearNotifications();
+        // clearNotifications();
         localStorage.setItem("date", `${day}.${month}.${year}`);
     }
 }
 else{
     localStorage.setItem("date", `${day}.${month}.${year}`);
 }
-
-let tableRows = document.querySelectorAll("tbody tr");
 
 let allJobs = [];
 
@@ -76,48 +77,65 @@ tableRows.forEach((row, index) => {
     
     endTime = new Date(year, month - 1, day, endTimeHour, endTimeMinute);
     
-    allJobs.push({
-        name : row.children[0].innerHTML,
-        beginTime,
-        endTime,
-        beginTimeHour,
-        beginTimeMinute,
-        endTimeHour,
-        endTimeMinute,
-        isShowed : false
-    });
-
-    if(!localStorage.getItem(`${index + 1}.job`)){
-        if(date.getTime() >= endTime.getTime()){
-            localStorage.setItem(`${index + 1}.job`, "showed");
-            allJobs[index].isShowed = true;
-        }
-        else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
-            localStorage.setItem(`${index + 1}.job`, "notShowed");
-        }
-        else if(date.getTime() < beginTime.getTime()){
-            localStorage.setItem(`${index + 1}.job`, "notShowed");
-        }
-    }
+    // if(!localStorage.getItem(`${index + 1}.job`)){
+    //     if(date.getTime() >= endTime.getTime()){
+    //         localStorage.setItem(`${index + 1}.job`, "showed");
+    //         allJobs[index].isShowed = true;
+    //     }
+    //     else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
+    //         localStorage.setItem(`${index + 1}.job`, "notShowed");
+    //     }
+    //     else if(date.getTime() < beginTime.getTime()){
+    //         localStorage.setItem(`${index + 1}.job`, "notShowed");
+    //     }
+    // }
 
     if(date.getTime() >= endTime.getTime()){
         row.classList.add("timeup");
         row.children[3].children[0].disabled = true;
         row.children[3].children[0].classList.add("ignore");
         row.classList.remove("active");
+        // localStorage.setItem(`${index + 1}.job`, "showed");
+        // allJobs[index].isShowed = true;
     }
     else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
         row.classList.add("todo");
         row.children[3].children[0].disabled = false;
         row.children[3].children[0].classList.remove("ignore");
         row.classList.add("active");
+        // if(!localStorage.getItem(`${index + 1}.job`)){
+        //     localStorage.setItem(`${index + 1}.job`, "notShowed");
+        // }
+        allJobs.push({
+            name : row.children[0].innerHTML,
+            beginTime,
+            endTime,
+            beginTimeHour,
+            beginTimeMinute,
+            endTimeHour,
+            endTimeMinute,
+            isShowed : false
+        });
     }
     else if(date.getTime() < beginTime.getTime()){
         row.children[3].children[0].disabled = true;
         row.children[3].children[0].classList.add("ignore");
         row.classList.remove("active");
+        // localStorage.setItem(`${index + 1}.job`, "notShowed");
+        allJobs.push({
+            name : row.children[0].innerHTML,
+            beginTime,
+            endTime,
+            beginTimeHour,
+            beginTimeMinute,
+            endTimeHour,
+            endTimeMinute,
+            isShowed : false
+        });
     }
 });
+
+console.log(allJobs);
 
 if (Notification.permission === 'granted') {
     let worker = new Worker("https://od-quorion.github.io/daily-plan/assets/js/worker.js");
