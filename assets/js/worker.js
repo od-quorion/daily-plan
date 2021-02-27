@@ -52,8 +52,6 @@
 
 self.onmessage = msg => {
     
-    console.log(msg.data);
-
     let date = new Date();
     
     msg.data.forEach(job => {
