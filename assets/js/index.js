@@ -141,7 +141,6 @@ if (Notification.permission === 'granted') {
 
 } else {
     Notification.requestPermission(permission => {
-        console.log(permission)
         if(permission === "granted"){
             let worker = new Worker("https://od-quorion.github.io/daily-plan/assets/js/worker.js");
             worker.postMessage(allJobs);
