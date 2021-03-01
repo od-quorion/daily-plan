@@ -17,7 +17,7 @@ self.onmessage = msg => {
             // }, 4000);
 
             notification.addEventListener('click', () => {
-                window.open('https://od-quorion.github.io/daily-plan/', '_blank');
+                window.open('https://od-quorion.github.io/daily-plan', '_blank');
             });
 
             // notification.addEventListener('close', () =>{
@@ -44,7 +44,7 @@ self.onmessage = msg => {
                 // }, 4000);
 
                 notification.addEventListener('click', () => {
-                    window.open('https://od-quorion.github.io/daily-plan/', '_blank');
+                    window.open('https://od-quorion.github.io/daily-plan', '_blank');
                 });
     
                 // notification.addEventListener('close', () =>{
