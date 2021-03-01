@@ -24,26 +24,12 @@ checkBoxes.forEach(checkBox => {
 
 });
 
-// let fillCheckBoxesFromLocalStorage = () =>{
-//     checkBoxes.forEach(checkBox => {
-        
-//     });
-// }
-
-// fillCheckBoxesFromLocalStorage();
-
 let clearCheckBoxes = () => {
     checkBoxes.forEach(checkBox => {
         checkBox.checked = false;
         localStorage.removeItem(checkBox.id);
     });
 }
-
-// let clearNotifications = () =>{
-//     tableRows.forEach((_, index) => {
-//         localStorage.setItem(`${index + 1}.job`, "notShowed");
-//     });
-// };
 
 if(localStorage.getItem("date")){
     let localDate = localStorage.getItem("date").split(".");
@@ -53,7 +39,6 @@ if(localStorage.getItem("date")){
 
     if((localYear < year) || (localYear == year && localMonth < month) || (localYear == year && localMonth == month && localDay < day)){
         clearCheckBoxes();
-        // clearNotifications();
         localStorage.setItem("date", `${day}.${month}.${year}`);
     }
 }
@@ -77,35 +62,18 @@ tableRows.forEach((row, index) => {
     
     endTime = new Date(year, month - 1, day, endTimeHour, endTimeMinute);
     
-    // if(!localStorage.getItem(`${index + 1}.job`)){
-    //     if(date.getTime() >= endTime.getTime()){
-    //         localStorage.setItem(`${index + 1}.job`, "showed");
-    //         allJobs[index].isShowed = true;
-    //     }
-    //     else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
-    //         localStorage.setItem(`${index + 1}.job`, "notShowed");
-    //     }
-    //     else if(date.getTime() < beginTime.getTime()){
-    //         localStorage.setItem(`${index + 1}.job`, "notShowed");
-    //     }
-    // }
 
     if(date.getTime() >= endTime.getTime()){
         row.classList.add("timeup");
         row.children[3].children[0].disabled = true;
         row.children[3].children[0].classList.add("ignore");
         row.classList.remove("active");
-        // localStorage.setItem(`${index + 1}.job`, "showed");
-        // allJobs[index].isShowed = true;
     }
     else if(date.getTime() < endTime.getTime() && date.getTime() >= beginTime.getTime()){
         row.classList.add("todo");
         row.children[3].children[0].disabled = false;
         row.children[3].children[0].classList.remove("ignore");
         row.classList.add("active");
-        // if(!localStorage.getItem(`${index + 1}.job`)){
-        //     localStorage.setItem(`${index + 1}.job`, "notShowed");
-        // }
         allJobs.push({
             name : row.children[0].innerHTML,
             beginTime,
@@ -121,7 +89,6 @@ tableRows.forEach((row, index) => {
         row.children[3].children[0].disabled = true;
         row.children[3].children[0].classList.add("ignore");
         row.classList.remove("active");
-        // localStorage.setItem(`${index + 1}.job`, "notShowed");
         allJobs.push({
             name : row.children[0].innerHTML,
             beginTime,
@@ -147,55 +114,3 @@ if (Notification.permission === 'granted') {
        }
     });
 }
-
-// else{
-//     let permission = await Notification.requestPermission();
-//     granted = permission === 'granted' ? true : false;
-//     granted == true ? localStorage.setItem("notificationPermission", true) : localStorage.setItem("notificationPermission", false);
-// }
-
-// setInterval(() => {
-//     (async () => {
-//         // create and show the notification
-//         const showNotification = () => {
-//             // create a new notification
-//             const notification = new Notification('JavaScript Notification API', {
-//                 body: 'This is a JavaScript Notification API demo',
-//                 icon: '../img/quorion_logo.svg'
-//             });
-
-//             // close the notification after 10 seconds
-//             setTimeout(() => {
-//                 notification.close();
-//             }, 10 * 1000);
-
-//             // navigate to a URL when clicked
-//             notification.addEventListener('click', () => {
-
-//                 window.open('https://www.javascripttutorial.net/web-apis/javascript-notification/', '_blank');
-//             });
-//         }
-
-//         // // show an error message
-//         // const showError = () => {
-//         //     const error = document.querySelector('.error');
-//         //     error.style.display = 'block';
-//         //     error.textContent = 'You blocked the notifications';
-//         // }
-
-//         // check notification permission
-        
-
-        
-
-//         //     let permission = await Notification.requestPermission();
-//         //     console.log(permission);
-//         //     granted = permission === 'granted' ? true : false;
-//         //     console.log(Notification.permission);
-//         // }
-
-//         // show notification or error
-//         // granted ? showNotification() : showError();
-
-//     })();
-// }, 300000);
