@@ -12,17 +12,17 @@ self.onmessage = msg => {
             
             job.isShowed = true;
             
-            setTimeout(() => {
-                notification.close()
-            }, 4000);
+            // setTimeout(() => {
+            //     notification.close()
+            // }, 4000);
 
             notification.addEventListener('click', () => {
                 window.open('https://od-quorion.github.io/daily-plan/', '_blank');
             });
 
-            notification.addEventListener('close', () =>{
-                notification.close();
-            });
+            // notification.addEventListener('close', () =>{
+            //     notification.close();
+            // });
         }
     });
 
@@ -39,17 +39,17 @@ self.onmessage = msg => {
 
                 job.isShowed = true;
                 
-                setTimeout(() => {
-                    notification.close()
-                }, 4000);
+                // setTimeout(() => {
+                //     notification.close()
+                // }, 4000);
 
                 notification.addEventListener('click', () => {
                     window.open('https://od-quorion.github.io/daily-plan/', '_blank');
                 });
     
-                notification.addEventListener('close', () =>{
-                    notification.close();
-                });
+                // notification.addEventListener('close', () =>{
+                //     notification.close();
+                // });
             }
         });
     }, 15000);
