@@ -7,14 +7,7 @@ self.onmessage = msg => {
             const notification = new Notification('Quorion Daily Plan', {
                 body: `${job.name} Time`,
                 icon: '../img/qback-logo.png',
-                badge : '../img/qback-logo.png',
-                actions : [
-                    {
-                        action : 'close',
-                        title : 'Close'
-                    }
-                ],
-                
+                badge : '../img/qback-logo.png'
             });
             
             job.isShowed = true;
