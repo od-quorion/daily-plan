@@ -62,9 +62,15 @@ tableRows.forEach((row, index) => {
     
     endTime = new Date(year, month - 1, day, endTimeHour, endTimeMinute);
     
-
+    
     if(date.getTime() >= endTime.getTime()){
-        row.classList.add("timeup");
+        let isCompleted = localStorage.getItem(row.children[3].children[0].id);
+        if(isCompleted && isCompleted === "true"){
+            row.classList.add("completed");
+        }
+        else{
+            row.classList.add("timeup");
+        }
         row.children[3].children[0].disabled = true;
         row.children[3].children[0].classList.add("ignore");
         row.classList.remove("active");

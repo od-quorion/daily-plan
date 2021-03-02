@@ -13,6 +13,7 @@ body{
     height: 100vh;
 }
 
+
 nav{
     height: 10vh;
     background-color: black;
@@ -59,7 +60,7 @@ main table tbody tr{
 
 main table tbody tr.active{
     font-weight: bold;
-    box-shadow: 0 0 15px 10px aqua;
+    box-shadow: 0 0 10px 5px aqua;
     z-index: 10;
 }
 
@@ -80,6 +81,12 @@ main table tbody td:nth-child(4)
     color: white;
 }
 
+.completed{
+    background-color: #00c10fcf;
+    color: white;
+}
+
+
 .ignore{
     cursor: not-allowed;
 }
@@ -88,6 +95,11 @@ main table tbody td input[type=checkbox]{
     width: 20px;
     height: 15px;
     mix-blend-mode: color-burn;
+}
+
+.completed input[type=checkbox]
+{
+    mix-blend-mode: luminosity !important;
 }
 
 table tr:first-child th:first-child {
