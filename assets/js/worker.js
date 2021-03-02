@@ -7,18 +7,23 @@ self.onmessage = msg => {
             const notification = new Notification('Quorion Daily Plan', {
                 body: `${job.name} Time`,
                 icon: '../img/qback-logo.png',
-                badge : '../img/qback-logo.png'
+                badge : '../img/qback-logo.png',
+                requireInteraction : true
             });
             
             job.isShowed = true;
+
+            notification.onclick = () => {
+                window.open('https://od-quorion.github.io/daily-plan', '_blank');
+            };
+
+            notification.onclose = () => {
+                notification.close();
+            };
             
             // setTimeout(() => {
             //     notification.close()
             // }, 4000);
-
-            notification.addEventListener('click', () => {
-                window.open('https://od-quorion.github.io/daily-plan', '_blank');
-            });
 
             // notification.addEventListener('close', () =>{
             //     notification.close();
