@@ -8,7 +8,6 @@ self.onmessage = msg => {
                 body: `${job.name} Time`,
                 icon: '../img/qback-logo.png',
                 badge : '../img/qback-logo.png',
-                vibrate : [200, 100, 200, 100, 200, 100, 200],
                 requireInteraction : true
             });
             
@@ -34,7 +33,6 @@ self.onmessage = msg => {
                     body: `${job.name} Time`,
                     icon: '../img/qback-logo.png',
                     badge : '../img/qback-logo.png',
-                    vibrate : [200, 100, 200, 100, 200, 100, 200],
                     requireInteraction : true
                 });
 
